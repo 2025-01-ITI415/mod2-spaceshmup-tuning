@@ -7,6 +7,9 @@ using UnityEngine;
 /// Note that this ONLY works for an orthographic Main Camera at [0,0,0].
 /// </summary>
 public class BoundsCheck : MonoBehaviour {
+    public enum eType { center, inset, outset };
+    [Header("Inscribed")]
+    public eType boundsType = eType.center;
     [Header("Set in Inspector")]
     public float radius = 1f;
     public bool keepOnScreen = true;
@@ -26,31 +29,35 @@ public class BoundsCheck : MonoBehaviour {
 
     void LateUpdate()
     {
+        float checkRadius = 0;
+            if (boundsType == eType.inset) checkRadius = -radius;
+        if (boundsType == eType.outset) checkRadius = radius;
+
         Vector3 pos = transform.position;
         isOnScreen = true;
         offRight = offLeft = offUp = offDown = false;
 
-        if (pos.x > camWidth - radius)
+        if (pos.x > camWidth + checkRadius)
         {
-            pos.x = camWidth - radius;
+            pos.x = camWidth + checkRadius;
             offRight = true;
         }
 
-        if (pos.x < -camWidth + radius)
+        if (pos.x < -camWidth - checkRadius)
         {
-            pos.x = -camWidth + radius;
+            pos.x = -camWidth - checkRadius;
             offLeft = true;
         }
 
-        if (pos.y > camHeight - radius)
+        if (pos.y > camHeight + checkRadius)
         {
-            pos.y = camHeight - radius;
+            pos.y = camHeight + checkRadius;
             offUp = true;
         }
 
-        if (pos.y < -camHeight + radius)
+        if (pos.y < -camHeight - checkRadius)
         {
-            pos.y = -camHeight + radius;
+            pos.y = -camHeight - checkRadius;
             offDown = true;
         }
 
