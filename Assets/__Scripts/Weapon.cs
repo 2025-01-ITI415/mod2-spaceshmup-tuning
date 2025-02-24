@@ -26,14 +26,14 @@ public enum WeaponType
 [System.Serializable]
 public class WeaponDefinition
 {
-    public WeaponType type = WeaponType.none;
+    public WeaponType type = WeaponType.blaster;
     public string letter; // Letter to show on the power-up
     public Color color = Color.white; // Color of Collar & power-up
     public GameObject projectilePrefab; // Prefab for projectiles
     public Color projectileColor = Color.white;
-    public float damageOnHit = 0; // Amount of damage caused
+    public float damageOnHit = 4.0f; // Amount of damage caused
     public float continuousDamage = 0; // Damage per second (Laser)
-    public float delayBetweenShots = 0;
+    public float delayBetweenShots = 1f;
     public float velocity = 20; // Speed of projectiles
 }
 public class Weapon : MonoBehaviour {
@@ -41,7 +41,7 @@ public class Weapon : MonoBehaviour {
 
     [Header("Set Dynamically")]
     [SerializeField]
-    private WeaponType _type = WeaponType.none;
+    private WeaponType _type = WeaponType.blaster;
     public WeaponDefinition def;
     public GameObject collar;
     public float lastShotTime; // Time last shot was fired
@@ -132,6 +132,7 @@ public class Weapon : MonoBehaviour {
                 p.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
                 p.rigid.velocity = p.transform.rotation * vel;
                 break;
+            
         }
     }
 
