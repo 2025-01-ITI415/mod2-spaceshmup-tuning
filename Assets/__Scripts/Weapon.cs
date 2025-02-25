@@ -105,7 +105,7 @@ public class Weapon : MonoBehaviour {
                 break;
             
             case WeaponType.spread:
-                def.delayBetweenShots = 100f;
+                def.delayBetweenShots = .65f;
                 break;
 
         }
