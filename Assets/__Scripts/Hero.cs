@@ -12,8 +12,8 @@ public class Hero : MonoBehaviour
     public float rollMult = -45;
     public float pitchMult = 30;
     public float gameRestartDelay = 2f;
-    public GameObject projectilePrefab;
-    public float projectileSpeed = 40;
+    public GameObject projectilePrefab; // Added projectile prefab
+    public float projectileSpeed = 40;  // Added projectile speed
     public Weapon[] weapons;
 
     [Header("Set Dynamically")]
@@ -62,11 +62,26 @@ public class Hero : MonoBehaviour
         // Rotate the ship to make it feel more dynamic
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
+        // Allow the ship to fire (Added this condition)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TempFire();
+        }
+
         // Use the fireDelegate to fire Weapons
         if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
         {
             fireDelegate();
         }
+    }
+
+    // Added TempFire() method
+    void TempFire()
+    {
+        GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+        projGO.transform.position = transform.position;
+        Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+        rigidB.velocity = Vector3.up * projectileSpeed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -157,4 +172,5 @@ public class Hero : MonoBehaviour
         }
     }
 }
+
 
