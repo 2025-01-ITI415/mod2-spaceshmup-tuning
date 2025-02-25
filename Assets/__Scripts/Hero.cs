@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour {
+public class Hero : MonoBehaviour
+{
     static public Hero S; // Singleton
 
     [Header("Set in Inspector")]
@@ -16,18 +17,19 @@ public class Hero : MonoBehaviour {
     public Weapon[] weapons;
 
     [Header("Set Dynamically")]
-    [SerializeField]
-    public float _shieldLevel = 1;
+    [Range(0, 4)]
+    [SerializeField] // Enforces shield level range
+    private float _shieldLevel = 1; // Shield Level with underscore (private)
 
-    // This variable holds a reference to the last triggering GameObject
-    private GameObject lastTriggerGo = null;
+    [Tooltip("This field holds a reference to the last triggering GameObject")]
+    private GameObject lastTriggerGo = null; // Prevents duplicate triggers
 
     // Declare a new delegate type WeaponFireDelegate
     public delegate void WeaponFireDelegate();
     // Create a WeaponFireDelegate field named fireDelegate.
     public WeaponFireDelegate fireDelegate;
 
-	void Start()
+    void Start()
     {
         if (S == null)
         {
@@ -43,9 +45,9 @@ public class Hero : MonoBehaviour {
         ClearWeapons();
         weapons[0].SetType(WeaponType.blaster);
     }
-	
-	// Update is called once per frame
-	void Update()
+
+    // Update is called once per frame
+    void Update()
     {
         // Pull in information from the Input class
         float xAxis = Input.GetAxis("Horizontal");
@@ -61,8 +63,6 @@ public class Hero : MonoBehaviour {
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
         // Use the fireDelegate to fire Weapons
-        // First, make sure the button is pressed: Axis("Jump")
-        // Then ensure that fireDelegate isn't null to avoid an error
         if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
         {
             fireDelegate();
@@ -73,28 +73,22 @@ public class Hero : MonoBehaviour {
     {
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
-        print("Triggered: " + go.name);
+        Debug.Log("Shield trigger hit by: " + go.name);
 
         // Make sure it's not the same triggering go as last time
-        if (go == lastTriggerGo)
-        {
-            return;
-        }
+        if (go == lastTriggerGo) return;
         lastTriggerGo = go;
 
-        if(go.tag == "Enemy")
+        // Check if the object is an Enemy
+        Enemy enemy = go.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            shieldLevel--;
-            Destroy(go);
-        }
-        else if (go.tag == "PowerUp")
-        {
-            // If the shield was triggered by a PowerUp
-            AbsorbPowerUp(go);
+            shieldLevel--; // Reduce shield level
+            Destroy(go); // Destroy enemy
         }
         else
         {
-            print("Triggered by non-Enemy: " + go.name);
+            Debug.LogWarning("Shield trigger hit by non-Enemy: " + go.name);
         }
     }
 
@@ -104,22 +98,21 @@ public class Hero : MonoBehaviour {
         switch (pu.type)
         {
             case WeaponType.shield:
-                shieldLevel++;
+                shieldLevel++; // Increase shield level
                 break;
 
             default:
-                if(pu.type == weapons[0].type)
+                if (pu.type == weapons[0].type)
                 {
                     Weapon w = GetEmptyWeaponSlot();
-                    if(w != null)
+                    if (w != null)
                     {
-                        // Set it to pu.type
                         w.SetType(pu.type);
                     }
                 }
                 else
                 {
-                    //If this is a different weapon type
+                    // If this is a different weapon type
                     ClearWeapons();
                     weapons[0].SetType(pu.type);
                 }
@@ -130,33 +123,30 @@ public class Hero : MonoBehaviour {
 
     public float shieldLevel
     {
-        get
-        {
-            return (_shieldLevel);
-        }
-        set
+        get { return _shieldLevel; }
+        private set
         {
             _shieldLevel = Mathf.Min(value, 4);
             // If the shield is going to be set to less than zero
             if (value < 0)
             {
                 Destroy(this.gameObject);
-                // Tell Main.S to restart the game after a delay
-                Main.S.DelayedRestart(gameRestartDelay);
+                // Tell Main to restart the game after a delay
+                Main.HERO_DIED();
             }
         }
     }
 
     Weapon GetEmptyWeaponSlot()
     {
-        for (int i=0; i<weapons.Length; i++)
+        for (int i = 0; i < weapons.Length; i++)
         {
             if (weapons[i].type == WeaponType.none)
             {
-                return (weapons[i]);
+                return weapons[i];
             }
         }
-        return (null);
+        return null;
     }
 
     void ClearWeapons()
@@ -167,3 +157,4 @@ public class Hero : MonoBehaviour {
         }
     }
 }
+

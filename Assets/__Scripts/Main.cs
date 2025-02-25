@@ -12,6 +12,7 @@ public class Main : MonoBehaviour
     public GameObject[] prefabEnemies; // Array of Enemy prefabs
     public float enemySpawnPerSecond = 0.5f; // Enemies spawned per second
     public float enemyInsetDefault = 1.5f; // Inset from the sides
+    public float gameRestartDelay = 2f; // Restart delay after death
     public WeaponDefinition[] weaponDefinitions;
     public GameObject prefabPowerUp;
     public WeaponType[] powerUpFrequency = new WeaponType[]
@@ -97,16 +98,28 @@ public class Main : MonoBehaviour
         }
     }
 
-    public void DelayedRestart(float delay)
+    public void DelayedRestart()
     {
-        // Invoke the Restart() method in delay seconds
-        Invoke(nameof(Restart), delay);
+        // Invoke Restart after the specified delay
+        Invoke(nameof(Restart), gameRestartDelay);
     }
 
     public void Restart()
     {
-        // Reload _Scene_0 to restart the game
-        SceneManager.LoadScene("_Scene_0");
+        // Reload the scene to restart the game
+        SceneManager.LoadScene("__Scene_0");
+    }
+
+    static public void HERO_DIED()
+    {
+        if (S != null)
+        {
+            S.DelayedRestart();
+        }
+        else
+        {
+            Debug.LogError("Main.S is null! Make sure Main is attached to _MainCamera.");
+        }
     }
 
     ///<summary>
