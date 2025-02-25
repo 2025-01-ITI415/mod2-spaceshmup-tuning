@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour {
     public Rigidbody rigid;
     [SerializeField]
     private WeaponType _type;
+    public Transform target; // target for homing
+    public float homingStrength = 5f; // how aggressively it homes in
 
     // This public property masks the field _type and takes action when it is set
     public WeaponType type
@@ -36,6 +38,17 @@ public class Projectile : MonoBehaviour {
         if (bndCheck.offUp)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_type == WeaponType.missile && target != null)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            Vector3 newVelocity = Vector3.Lerp(rigid.velocity, direction * rigid.velocity.magnitude, Time.fixedDeltaTime * homingStrength);
+            rigid.velocity = newVelocity;
+            transform.LookAt(target);
         }
     }
 

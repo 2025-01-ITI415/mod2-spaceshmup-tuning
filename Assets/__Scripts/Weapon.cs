@@ -118,6 +118,8 @@ public class Weapon : MonoBehaviour {
         switch (type)
         {
             case WeaponType.blaster:
+                def.damageOnHit = 3; // Reduced damage
+                def.delayBetweenShots = 0.25f; // Increased fire rate
                 p = MakeProjectile();
                 p.rigid.velocity = vel;
                 break;
@@ -131,6 +133,52 @@ public class Weapon : MonoBehaviour {
                 p = MakeProjectile(); // Make left Projectile
                 p.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
                 p.rigid.velocity = p.transform.rotation * vel;
+                p = MakeProjectile();
+                p.transform.rotation = Quaternion.AngleAxis(-20, Vector3.back);
+                p.rigid.velocity = p.transform.rotation * vel;
+                p = MakeProjectile();
+                p.transform.rotation = Quaternion.AngleAxis(20, Vector3.back);
+                p.rigid.velocity = p.transform.rotation * vel;
+                break;
+            case WeaponType.phaser:
+                def.damageOnHit = 4;
+                def.delayBetweenShots = 0.75f;
+                p = MakeProjectile();
+                p.rigid.velocity = vel;
+                p.rigid.AddForce(new Vector3(Mathf.Sin(Time.time * 5) * 5, 0, 0), ForceMode.VelocityChange);
+                break;
+            case WeaponType.missile:
+                def.damageOnHit = 8;
+                def.delayBetweenShots = 1.5f;
+                p = MakeProjectile();
+                p.rigid.velocity = vel;
+
+                // Find the nearest enemy to target
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                if (enemies.Length > 0)
+                {
+                    GameObject closestEnemy = enemies[0];
+                    float closestDistance = Vector3.Distance(p.transform.position, closestEnemy.transform.position);
+
+                    foreach (GameObject enemy in enemies)
+                    {
+                        float distance = Vector3.Distance(p.transform.position, enemy.transform.position);
+                        if (distance < closestDistance)
+                        {
+                            closestDistance = distance;
+                            closestEnemy = enemy;
+                        }
+                    }
+
+                    p.target = closestEnemy.transform; // Assign the closest enemy as the target
+                }
+                break;
+
+            case WeaponType.laser:
+                def.continuousDamage = 2;
+                def.delayBetweenShots = 0.1f;
+                p = MakeProjectile();
+                p.rigid.velocity = vel;
                 break;
         }
     }
