@@ -5,11 +5,14 @@ using UnityEngine;
 // Enemy_1 extends the Enemy class
 public class Enemy_1 : Enemy {
 
-    [Header("Set in Inspector: Enemy_1")]
+    [Header("Enemy_1 Inscribed Fields")]
+    [Tooltip("# of seconds for a full sine wave")]
     // # seconds for a full sine wave
     public float waveFrequency = 2;
+    [Tooltip("Sine wave width in meters")]
     // sine wave width in meters
     public float waveWidth = 4;
+    [Tooltip("Amount the ship will roll left and right with the sine wave")]
     public float waveRotY = 45;
 
     private float x0; // The initial x value of pos

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour {
-
+[RequireComponent(typeof(BoundsCheck))]
+public class ProjectileHero : MonoBehaviour
+{
     private BoundsCheck bndCheck;
     private Renderer rend;
 
@@ -15,15 +16,10 @@ public class Projectile : MonoBehaviour {
     // This public property masks the field _type and takes action when it is set
     public WeaponType type
     {
-        get
-        {
-            return (_type);
-        }
-        set
-        {
-            SetType(value);
-        }
+        get { return _type; }
+        set { SetType(value); }
     }
+
     private void Awake()
     {
         bndCheck = GetComponent<BoundsCheck>();
@@ -33,7 +29,7 @@ public class Projectile : MonoBehaviour {
 
     private void Update()
     {
-        if (bndCheck.offUp)
+        if (bndCheck.LocIs(BoundsCheck.eScreenLocs.offUp))
         {
             Destroy(gameObject);
         }

@@ -220,9 +220,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4966457561255300}
   - component: {fileID: 54316716010943782}
-  - component: {fileID: 114856579444743734}
   - component: {fileID: 114326274758462888}
   - component: {fileID: 2142117365894955767}
+  - component: {fileID: 5023533347627692713}
   m_Layer: 9
   m_Name: Enemy_0
   m_TagString: Enemy
@@ -275,29 +275,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!114 &114856579444743734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1864666716847092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b483c78a264b747a4500e775cb6a22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  fireRate: 0.3
-  health: 10
-  score: 100
-  showDamageDuration: 0.1
-  powerUpDropChance: 0.25
-  originalColors: []
-  materials: []
-  showingDamage: 0
-  damageDoneTime: 0
-  notifiedOfDestruction: 0
 --- !u!114 &114326274758462888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,7 +290,7 @@ MonoBehaviour:
   boundsType: 2
   radius: 2
   keepOnScreen: 0
-  isOnScreen: 1
+  screenLocs: 0
   camWidth: 0
   camHeight: 0
   offRight: 0
@@ -343,6 +320,18 @@ CapsuleCollider:
   m_Height: 2.9
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5023533347627692713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864666716847092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd0db39c101245e39d22cda384a3ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1127865919127159356
 PrefabInstance:
   m_ObjectHideFlags: 0

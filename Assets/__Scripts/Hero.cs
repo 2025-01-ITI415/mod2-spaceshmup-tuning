@@ -43,6 +43,7 @@ public class Hero : MonoBehaviour
 
         // Reset the weapons to start _Hero with 1 blaster
         ClearWeapons();
+        Debug.Log("Weapons array length: " + weapons.Length);
         weapons[0].SetType(WeaponType.blaster);
     }
 
@@ -81,7 +82,15 @@ public class Hero : MonoBehaviour
         GameObject projGO = Instantiate<GameObject>(projectilePrefab);
         projGO.transform.position = transform.position;
         Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
-        rigidB.velocity = Vector3.up * projectileSpeed;
+
+        if (rigidB != null)
+        {
+            rigidB.velocity = Vector3.up * projectileSpeed;
+        }
+        else
+        {
+            Debug.LogError("Projectile prefab is missing a Rigidbody!");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
