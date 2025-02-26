@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Enemy_2 : Enemy {
 
-    [Header("Set in Inspector: Enemy_2")]
+    [Header("Enemy_2 Inscribed Fields")]
     // Determines how much the sine wave will affect movement
     public float sinEccentricity = 0.6f;
+    public AnimationCurve rotCurve;
     public float lifeTime = 10;
+    [Tooltip("Determines how much the Sine wave will ease the interpolation")]
 
-    [Header("Set Dynamically: Enemy_2")]
+    [Header("Enemy_2 Private Fields")]
     // Enemy_2 uses a Sin wave to modify a 2-point linear interpolation
-    public Vector3 p0;
-    public Vector3 p1;
-    public float birthTime;
+    [SerializeField] public Vector3 p0;
+    [SerializeField] public Vector3 p1;
+    [SerializeField] public float birthTime;
+    private Quaternion baseRotation;
 
     private void Start()
     {
@@ -38,6 +41,10 @@ public class Enemy_2 : Enemy {
 
         // Set the birthTime to the current time
         birthTime = Time.time;
+        // Set up the initial ship rotation
+        transform.position = p0;
+        transform.LookAt(p1, Vector3.back);
+        baseRotation = transform.rotation;
     }
 
     public override void Move()
@@ -53,6 +60,11 @@ public class Enemy_2 : Enemy {
             return;
         }
 
+        // Use the AnimationCurve to set the rotation about Y
+        float shipRot = rotCurve.Evaluate(u) * 360;
+        //if (p0.x > p1.x) shipRot = -shipRot;
+        //transform.rotation = Quaternion.Euler(0, shipRot, 0);
+        transform.rotation = baseRotation * Quaternion.Euler(-shipRot, 0, 0);
         // Adjust u by adding a U Curve based on a Sine wave
         u = u + sinEccentricity * (Mathf.Sin(u * Mathf.PI * 2));
 

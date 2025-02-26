@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
     [Header("Set in Inspector: Enemy")]
     public float speed = 10f; // The speed in m/s
     public float fireRate = 0.3f; // Seconds/shot (Unused)
@@ -80,7 +79,6 @@ public class Enemy : MonoBehaviour
             Debug.Log("Enemy hit by non-Projectile: " + otherGO.name);
         }
     }
-
 
     void ShowDamage()
     {

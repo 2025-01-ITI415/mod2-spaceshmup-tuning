@@ -7,9 +7,14 @@ public class Enemy_3 : Enemy { // Enemy_3 extends Enemy
     // interpolation between more than two points.
     [Header("Set in Inspector: Enemy_3")]
     public float lifeTime = 5;
+    public Vector2 midpointYRange = new Vector2(1.5f, 3);
+    [Tooltip("If true, the Bezier points & path are drawn in the Scene pane.")]
+    public bool drawDebugInfo = true;
 
     [Header("Set Dynamically: Enemy_3")]
+    [SerializeField]
     public Vector3[] points;
+    [SerializeField]
     public float birthTime;
 
     private void Start()
@@ -52,11 +57,33 @@ public class Enemy_3 : Enemy { // Enemy_3 extends Enemy
             return;
         }
 
+        transform.rotation = Quaternion.Euler(u * 180, 0, 0);
+
         // Interpolate the three Bezier curve points
         Vector3 p01, p12;
         u = u - (0.2f * Mathf.Sin(u * Mathf.PI * 2));
         p01 = ((1 - u) * points[0]) + (u * points[1]);
         p12 = ((1 - u) * points[1]) + (u * points[2]);
         pos = ((1 - u) * p01) + (u * p12);
+    }
+    void DrawDebug()
+    {
+        //Draw the three points
+        Debug.DrawLine(points[0], points[1], Color.cyan, lifeTime);
+        Debug.DrawLine(points[1], points[2], Color.yellow, lifeTime);
+
+        //Draw the Bezier Curve
+        float numSections = 20;
+        Vector3 prevPoint = points[0];
+        Color col;
+        Vector3 pt;
+        for ( int i = 1; i < numSections; i++)
+        {
+            float u = i / numSections;
+            pt = Utils.Bezier(u, points);
+            col = Color.Lerp(Color.cyan, Color.yellow, u);
+            Debug.DrawLine(prevPoint, pt, col, lifeTime);
+            prevPoint = pt;
+        }
     }
 }
