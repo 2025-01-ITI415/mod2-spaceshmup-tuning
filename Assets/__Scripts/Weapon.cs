@@ -176,7 +176,7 @@ public class Weapon : MonoBehaviour {
 
             case WeaponType.laser:
                 def.continuousDamage = 2;
-                def.delayBetweenShots = 0.1f;
+                def.delayBetweenShots = 0.01f;
                 p = MakeProjectile();
                 p.rigid.velocity = vel;
                 break;
