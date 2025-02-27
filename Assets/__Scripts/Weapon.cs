@@ -47,6 +47,7 @@ public class Weapon : MonoBehaviour {
     public float lastShotTime; // Time last shot was fired
     private Renderer collarRend;
 
+
     private void Start()
     {
         collar = transform.Find("Collar").gameObject;
@@ -120,11 +121,14 @@ public class Weapon : MonoBehaviour {
         switch (type)
         {
             case WeaponType.blaster:
+                def.delayBetweenShots = 0.13f;
+                def.damageOnHit = 1;
                 p = MakeProjectile();
                 p.rigid.velocity = vel;
                 break;
 
             case WeaponType.spread:
+                def.delayBetweenShots = 0.9f;
                 p = MakeProjectile(); // Make middle Projectile
                 p.rigid.velocity = vel;
                 p = MakeProjectile(); // Make right Projectile

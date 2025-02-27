@@ -223,5 +223,6 @@ MonoBehaviour:
     continuousDamage: 0
     delayBetweenShots: 0.3
     velocity: 20
+  weaponDefinitions: []
   collar: {fileID: 0}
   lastShotTime: 0
