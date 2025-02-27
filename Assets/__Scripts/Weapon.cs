@@ -35,6 +35,7 @@ public class WeaponDefinition
     public float continuousDamage = 0; // Damage per second (Laser)
     public float delayBetweenShots = 0;
     public float velocity = 20; // Speed of projectiles
+    public float delayBetweenShotgun = 3f;
 }
 public class Weapon : MonoBehaviour {
     static public Transform PROJECTILE_ANCHOR;
@@ -123,6 +124,10 @@ public class Weapon : MonoBehaviour {
                 break;
 
             case WeaponType.spread:
+                if (Time.time - lastShotTime < def.delayBetweenShotgun)
+                {
+                    return;
+                }
                 p = MakeProjectile(); // Make middle Projectile
                 p.rigid.velocity = vel;
                 p = MakeProjectile(); // Make right Projectile
@@ -130,6 +135,13 @@ public class Weapon : MonoBehaviour {
                 p.rigid.velocity = p.transform.rotation * vel;
                 p = MakeProjectile(); // Make left Projectile
                 p.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
+                p.rigid.velocity = p.transform.rotation * vel;
+
+                p = MakeProjectile(); 
+                p.transform.rotation = Quaternion.AngleAxis(5, Vector3.back);
+                p.rigid.velocity = p.transform.rotation * vel;
+                p = MakeProjectile(); 
+                p.transform.rotation = Quaternion.AngleAxis(-5, Vector3.back);
                 p.rigid.velocity = p.transform.rotation * vel;
                 break;
         }
