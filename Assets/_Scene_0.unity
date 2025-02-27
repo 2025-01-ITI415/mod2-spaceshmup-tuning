@@ -963,6 +963,11 @@ PrefabInstance:
       propertyPath: def.damageOnHit
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114684557380802588, guid: d38b8bdef6bb4724e9a7341bda0aad27,
+        type: 3}
+      propertyPath: def.delayBetweenShots
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1151,8 +1156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89945d366f74234594d375c5597c723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  rollMult: -45
+  speed: 80
+  rollMult: -65
   pitchMult: 30
   gameRestartDelay: 2
   projectilePrefab: {fileID: 1899541879965282, guid: 59a4640edad59f94a87c1d235355cb6a,
