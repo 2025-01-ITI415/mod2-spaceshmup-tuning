@@ -382,10 +382,10 @@ MonoBehaviour:
     projectilePrefab: {fileID: 1899541879965282, guid: 59a4640edad59f94a87c1d235355cb6a,
       type: 3}
     projectileColor: {r: 1, g: 1, b: 1, a: 1}
-    damageOnHit: 1
+    damageOnHit: 100
     continuousDamage: 0
     delayBetweenShots: 0.2
-    velocity: 50
+    velocity: 300
   - type: 2
     letter: S
     color: {r: 0, g: 0.65676546, b: 1, a: 1}
@@ -1141,7 +1141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89945d366f74234594d375c5597c723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 50
   rollMult: -45
   pitchMult: 30
   gameRestartDelay: 2
