@@ -291,9 +291,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3a8a9e179cd9d4b822c6eebbc717e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 30
   fireRate: 0.3
-  health: 2
+  health: 1
   score: 100
   showDamageDuration: 0.1
   powerUpDropChance: 1
@@ -304,25 +304,25 @@ MonoBehaviour:
   notifiedOfDestruction: 0
   parts:
   - name: Cockpit
-    health: 10
+    health: 4
     protectedBy:
     - Fuselage
     go: {fileID: 0}
     mat: {fileID: 0}
   - name: Fuselage
-    health: 10
+    health: 4
     protectedBy:
     - WingL
     - WingR
     go: {fileID: 0}
     mat: {fileID: 0}
   - name: WingL
-    health: 10
+    health: 4
     protectedBy: []
     go: {fileID: 0}
     mat: {fileID: 0}
   - name: WingR
-    health: 10
+    health: 4
     protectedBy: []
     go: {fileID: 0}
     mat: {fileID: 0}
