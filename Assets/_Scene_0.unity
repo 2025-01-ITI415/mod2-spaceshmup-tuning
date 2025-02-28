@@ -382,9 +382,9 @@ MonoBehaviour:
     projectilePrefab: {fileID: 1899541879965282, guid: 59a4640edad59f94a87c1d235355cb6a,
       type: 3}
     projectileColor: {r: 1, g: 1, b: 1, a: 1}
-    damageOnHit: 1
+    damageOnHit: 0.5
     continuousDamage: 0
-    delayBetweenShots: 0.2
+    delayBetweenShots: 0.1
     velocity: 50
   - type: 2
     letter: S
@@ -394,7 +394,7 @@ MonoBehaviour:
     projectileColor: {r: 0, g: 0.654902, b: 1, a: 1}
     damageOnHit: 1
     continuousDamage: 0
-    delayBetweenShots: 0.4
+    delayBetweenShots: 0.8
     velocity: 50
   - type: 6
     letter: O
